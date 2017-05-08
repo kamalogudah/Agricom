@@ -17,8 +17,22 @@
         <br>
         <script type="text/javascript">
           function our_layer(map, options){
-              var datasets = new L.GeoJSON.AJAX("{% url 'subloc' %}",{});
-              datasets.addTo(map);
+              var datasets = new L.GeoJSON.AJAX("{% url 'subloc' %}",{
+                  onEachFeature: function(feature, layer){
+                      layer.bindPopup(feature.properties.subloc.toString());
+                  }
+              });
+              
+              var points = new L.GeoJSON.AJAX("{% url 'name' %}",{
+                  onEachFeature: function(feature, layer){
+                      layer.bindPopup(feature.properties.name.toString());
+                  }
+
+              });
+              
+          
+             datasets.addTo(map);
+             points.addTo(map);
           }
         </script>
         {% leaflet_map "gis" callback="window.our_layer" %}
