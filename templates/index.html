@@ -18,6 +18,24 @@
         <script type="text/javascript">
           function our_layer(map, options){
               var datasets = new L.GeoJSON.AJAX("{% url 'subloc' %}",{
+                  style: function colors(feature) {
+                      switch(feature.properties.subloc){
+                          case 'KIBISH':
+                            return {
+                                color: 'orange',
+                                fillOpacity: 0.8
+                            };
+                        break;
+                         case 'BUBISA':
+                            return {
+                                color: 'red',
+                                 fillOpacity: 0.8
+                            };
+                        break;
+
+
+                      }
+                  },
                   onEachFeature: function(feature, layer){
                       layer.bindPopup(feature.properties.subloc.toString());
                   }
