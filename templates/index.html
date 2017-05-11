@@ -9,6 +9,8 @@
         <style type="text/css">
           #gis {width:1200px; height:800px;}
         </style>
+        <style type="text/css" href="{% static 'routing/leaflet-routing-machine.css'%}">  </style>
+        <script type="text/javascript" src="{% static 'routing/leaflet-routing-machine.js'%}"> </script>
          <style type="text/css" href="{% static 'groupedlayers/leaflet.groupedlayercontrol.min.css'%}">  </style>
         <script type="text/javascript" src="{% static 'dist/leaflet.ajax.js'%}"> </script>
         <script type="text/javascript" src="{% static 'groupedlayers/leaflet.groupedlayercontrol.min.js'%}">
@@ -20,6 +22,7 @@
         <script type="text/javascript">
           function our_layer(map, options){
               var osm = 'http://($).tile.openstreetmap.org/{z}[y}{x}.png';
+              var topo = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
               var datasets = new L.GeoJSON.AJAX("{% url 'subloc' %}",{
                   style: function colors(feature) {
                       switch(feature.properties.subloc){
@@ -56,7 +59,8 @@
              points.addTo(map);
 
              var baseLayers = {
-                 'OSM': osm
+                 'OSM': osm,
+                 'OpenTopo': topo
              };
              var groupedOverlays = {
                 "Layers": {
@@ -66,6 +70,13 @@
                 };
 
            L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+
+        //    L.Routing.control({
+        //       waypoints: [
+        //        L.latLng(1.97714655371257757,39.99023437500001),
+        //        L.latLng(-0.213628551981595, 35.06805472809647)
+        //              ]}).addTo(map);
+
           }
         </script>
         {% leaflet_map "gis" callback="window.our_layer" %}
