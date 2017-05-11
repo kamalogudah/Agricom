@@ -25,7 +25,7 @@ SECRET_KEY = '3d%4xu+_i^y(135y67hptss4*d5@ijbz87$+u6v9dmq_bce)&6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['b58eb2bc.ngrok.io','127.0.0.1']
 
 
 # Application definition
@@ -130,7 +130,7 @@ STATICFILES_DIRS = (
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (0.0236, 37.9062),
-    'DEFAULT_ZOOM': 5,
+    'DEFAULT_ZOOM': 7,
     'MAX_ZOOM' : 20,
     'MIN_ZOOM' : 3,
     'SCALE': 'both',

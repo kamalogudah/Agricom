@@ -9,7 +9,9 @@
         <style type="text/css">
           #gis {width:1200px; height:800px;}
         </style>
-        <script type="text/javascript" src="{% static 'dist/leaflet.ajax.js'%}">
+         <style type="text/css" href="{% static 'groupedlayers/leaflet.groupedlayercontrol.min.css'%}">  </style>
+        <script type="text/javascript" src="{% static 'dist/leaflet.ajax.js'%}"> </script>
+        <script type="text/javascript" src="{% static 'groupedlayers/leaflet.groupedlayercontrol.min.js'%}">
         </script>
     </head>
     <body>
@@ -17,6 +19,7 @@
         <br>
         <script type="text/javascript">
           function our_layer(map, options){
+              var osm = 'http://($).tile.openstreetmap.org/{z}[y}{x}.png';
               var datasets = new L.GeoJSON.AJAX("{% url 'subloc' %}",{
                   style: function colors(feature) {
                       switch(feature.properties.subloc){
@@ -51,6 +54,18 @@
           
              datasets.addTo(map);
              points.addTo(map);
+
+             var baseLayers = {
+                 'OSM': osm
+             };
+             var groupedOverlays = {
+                "Layers": {
+                    "Sublocations": datasets,
+                    "Incidences ": points
+                }
+                };
+
+           L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
           }
         </script>
         {% leaflet_map "gis" callback="window.our_layer" %}
